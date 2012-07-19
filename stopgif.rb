@@ -28,12 +28,24 @@ get '/' do
       end
     rescue Exception => e
       p ['Err', e.message, url, Time.now]
-      # content_type 'text/plain'
-      # halt 500, 'Error: ' + e.message
-      redirect url
+      redirect(params[:alt] || url)
     end
   else
     content_type 'text/plain'
-    "usage: /?url=xxxx"
+    s = <<-EOS
+      # Stopgif
+
+      extract a gif image from animation gif
+
+          /?url=http%3A%2F%2Fexample.com%2Ffoo.gif
+
+     ## options
+
+          /?url=http%3A%2F%2Fexample.com%2Ffoo.gif&index=5
+          /?url=http%3A%2F%2Fexample.com%2Ffoo.gif&alt=http%3A%2F%2Fexample.com%2Fbar.gif
+
+      https://github.com/swdyh/stopgif
+
+    EOS
   end
 end
